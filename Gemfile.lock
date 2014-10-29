@@ -1,0 +1,22 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    eventmachine (1.0.3-x86-mingw32)
+    rubame (0.0.2)
+      websocket (~> 1.0)
+    websocket (1.2.1)
+    websocket-eventmachine-base (1.1.0)
+      eventmachine (~> 1.0)
+      websocket (~> 1.0)
+      websocket-native (~> 1.0)
+    websocket-eventmachine-server (1.0.1)
+      websocket-eventmachine-base (~> 1.0)
+    websocket-native (1.0.0)
+
+PLATFORMS
+  x86-mingw32
+
+DEPENDENCIES
+  eventmachine
+  rubame
+  websocket-eventmachine-server

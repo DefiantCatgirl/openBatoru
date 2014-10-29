@@ -9,6 +9,7 @@ class Card
                 :color,             # :BLACK, :BLUE, :RED, :WHITE, :GREEN, :BLANK
                 :cost,              # Hash of the cost to play the card
                 :timing,            # When this ARTS can be activated: :MAIN, :ATTACK, :SPELL (cut-in)
+                :power,             # SIGNI power
 
                 :onplay_actions,    #
                 :constant_actions,  #   Card actions, arrays of Action class, this is the scriptable part pretty much.
