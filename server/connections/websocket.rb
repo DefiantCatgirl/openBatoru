@@ -5,7 +5,7 @@ class WebSocketConnection
 
   def initialize(ws, lobby)
     @ws = ws
-    @lobby
+    @lobby = lobby
   end
 
   def connection_completed

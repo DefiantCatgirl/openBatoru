@@ -1,5 +1,5 @@
 require 'rubygems'
-require 'em/pure_ruby' if Gem.win_platform?
+# require 'em/pure_ruby' if Gem.win_platform?
 require 'eventmachine'
 require File.join(File.dirname(__FILE__), './connection_helper')
 

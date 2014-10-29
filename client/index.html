@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+
+    <title>openBatoru</title>
+
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="scripts/batoru.js"></script>
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="import" href="http://www.polymer-project.org/components/paper-ripple/paper-ripple.html">
+</head>
+<body>
+    <div class="card container">
+        <div id="header">
+            <div class="h1">open<strong>Batoru</strong></div>
+            <div class="h2">The most tanoshii thing on the interwebs</div>
+        </div>
+        <div id="chat_column">
+            Chat!
+        </div>
+        <div id="user_column">Users!</div>
+        <div id="footer">
+            <div id="footer_content">
+                <input type="text" class="text_input" id="text_input">
+            </div>
+            <div id="footer_right">
+                <div class="button raised send_button" onclick="onClick()">
+                    <div class="center" id="send_button" fit>Login</div>
+                    <paper-ripple fit></paper-ripple>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

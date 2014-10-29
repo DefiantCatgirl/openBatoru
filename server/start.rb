@@ -1,5 +1,5 @@
 require 'rubygems'
-require 'em/pure_ruby' if Gem.win_platform?
+# require 'em/pure_ruby' if Gem.win_platform?
 require 'eventmachine'
 require 'websocket-eventmachine-server'
 require File.join(File.dirname(__FILE__), './connections/socket')
@@ -18,7 +18,7 @@ EM.run do
     begin
       puts 'Websocket CONNECTED'
       ws.onopen do |handshake|
-        @ws_conns[ws.object_id] = WebSocketConnection.new(ws, lobby)
+        @ws_conns[ws.object_id] = WebSocketConnection.new(ws, @lobby)
         obj = @ws_conns[ws.object_id]
         obj.connection_completed
       end
