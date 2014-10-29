@@ -1,4 +1,5 @@
-require 'em/pure_ruby'
+require 'rubygems'
+require 'em/pure_ruby' if Gem.win_platform?
 require 'eventmachine'
 
 $connector = nil
@@ -10,7 +11,7 @@ class Connector < EM::Connection
   end
 
   def receive_data(data)
-    puts "Received #{data.length} bytes: " + data
+    puts "Received #{data.length} bytes: " + data.chomp
   end
 
   def send(data)
