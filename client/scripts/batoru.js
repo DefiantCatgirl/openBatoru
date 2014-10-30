@@ -18,6 +18,29 @@ function escapeHtml(string) {
     });
 }
 
+function componentToHex(c) {
+    var hex = c.toString(16);
+    return hex.length == 1 ? "0" + hex : hex;
+}
+
+function rgbToHex(r, g, b) {
+    return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+}
+
+function usernameToColor(string) {
+    var sum = 0;
+    for(var i = 0; i < string.length; i++)
+    {
+        sum += string.charCodeAt(i);
+//        console.log(sum + " + " + string.charCodeAt(i));
+    }
+    var red = (sum % 2 == 0);
+    var blue = (sum % 3 == 0);
+    var green = (sum % 5 == 0);
+
+    return rgbToHex(red ? 150 : 0, blue ? 150 : 0, green ? 150 : 0);
+}
+
 var ws = new WebSocket("ws://127.0.0.1:3001");
 
 ws.onopen = function() { };
@@ -33,12 +56,14 @@ ws.onmessage = function(evt) {
         else {
             loggedIn = true;
             document.getElementById("send_button").innerHTML = "Send";
-            $("#chat_column").append("<p>You logged in as <strong>" + username + "</strong></p>");
+            $("#chat_column").append("<p>You logged in as <strong style=\"color: " + usernameToColor(username) + "\">" +
+                                      escapeHtml(username) + "</strong></p>");
         }
     }
     else {
         var chat = $("#chat_column");
-        chat.append("<p><strong>" + escapeHtml(res.username) + ":</strong> " + escapeHtml(res.text) + "</p>");
+        chat.append("<p><strong style=\"color: " + usernameToColor(res.username) + "\">" +
+                     escapeHtml(res.username) + ":</strong> " + escapeHtml(res.text) + "</p>");
         chat.animate({scrollTop: chat.prop("scrollHeight")}, 500);
     }
 };
@@ -55,7 +80,7 @@ function login() {
 function chat() {
     var payload = {};
     payload.type = "chat";
-    payload.scope = "global";
+//    payload.scope = "global";
     payload.text = document.getElementById("chat_input").value;
     ws.send(JSON.stringify(payload));
 }

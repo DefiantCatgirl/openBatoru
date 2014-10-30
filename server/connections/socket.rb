@@ -13,7 +13,7 @@ class SocketConnection < EM::Connection
   end
 
   def connection_completed
-    puts 'Socket OPEN!'
+
   end
 
   def receive_data(data)
@@ -22,7 +22,6 @@ class SocketConnection < EM::Connection
 
   def unbind
     disconnect
-    puts 'Socket CLOSED!'
   end
 
   def send_message_socket(msg)

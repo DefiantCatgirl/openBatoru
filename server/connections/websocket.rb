@@ -9,7 +9,7 @@ class WebSocketConnection
   end
 
   def connection_completed
-    puts 'Websocket OPEN!'
+
   end
 
   def handle(msg)
@@ -18,7 +18,6 @@ class WebSocketConnection
 
   def unbind
     disconnect
-    puts 'Websocket CLOSED!'
   end
 
   def send_message_socket(msg)

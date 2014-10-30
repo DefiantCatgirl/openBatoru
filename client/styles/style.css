@@ -136,3 +136,8 @@ body {
 .text_input {
     width: 100%;
 }
+
+p {
+    margin: 3px 0;
+    /*background-color: #fafafa;*/
+}
