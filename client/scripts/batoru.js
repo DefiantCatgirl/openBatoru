@@ -57,13 +57,25 @@ ws.onmessage = function(evt) {
             loggedIn = true;
             document.getElementById("send_button").innerHTML = "Send";
             $("#chat_column").append("<p>You logged in as <strong style=\"color: " + usernameToColor(username) + "\">" +
-                                      escapeHtml(username) + "</strong></p>");
+                                      escapeHtml(username) + "</strong>.</p>");
         }
     }
-    else {
+    else if(res.type == "chat") {
         var chat = $("#chat_column");
         chat.append("<p><strong style=\"color: " + usernameToColor(res.username) + "\">" +
                      escapeHtml(res.username) + ":</strong> " + escapeHtml(res.text) + "</p>");
+        chat.animate({scrollTop: chat.prop("scrollHeight")}, 500);
+    }
+    else if(res.type == "join" && res.username != username) {
+        var chat = $("#chat_column");
+        chat.append("<p><strong style=\"color: " + usernameToColor(res.username) + "\">" +
+            escapeHtml(res.username) + "</strong> has joined.</p>");
+        chat.animate({scrollTop: chat.prop("scrollHeight")}, 500);
+    }
+    else if(res.type == "leave") {
+        var chat = $("#chat_column");
+        chat.append("<p><strong style=\"color: " + usernameToColor(res.username) + "\">" +
+            escapeHtml(res.username) + "</strong> has left.</p>");
         chat.animate({scrollTop: chat.prop("scrollHeight")}, 500);
     }
 };
