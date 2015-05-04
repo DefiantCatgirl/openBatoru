@@ -96,14 +96,14 @@ class Lobby
   def send_create_channel(channel)
     payload = {}
     payload[:type] = 'channel_created'
-    payload[:channel] = channel
+    payload[:channelname] = channel
     send_scope(nil, payload)
   end
 
   def send_delete_channel(channel)
     payload = {}
     payload[:type] = 'channel_deleted'
-    payload[:channel] = channel
+    payload[:channelname] = channel
     send_scope(nil, payload)
   end
 
@@ -159,8 +159,8 @@ class Lobby
       end
     else
       if @channels.has_key? scope
-        @channels[scope].each do |conn|
-          conn.send_message(message)
+        @channels[scope].each do |username|
+          @guests[username].send_message(message)
         end
       end
     end
