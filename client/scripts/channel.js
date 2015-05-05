@@ -6,6 +6,15 @@
 
         var userList = [];
 
+        function postToChat(message)
+        {
+            if(Channel.active) {
+                var chat = $("#chat_messages");
+                chat.append(message);
+                chat.animate({scrollTop: chat.prop("scrollHeight")}, 500);
+            }
+        }
+
         function refreshUserList () {
             userList.sort(function(a, b) { return a.toLowerCase().localeCompare(b.toLowerCase()) });
             var usersBlock = $("#user_list");
@@ -19,7 +28,17 @@
 
         return {
 
-            active: true,
+            active: false,
+
+            activate: function () {
+                Channel.active = true;
+                refreshUserList();
+            },
+
+            deactivate: function() {
+                Channel.active = false;
+            },
+
 
             handleInput: function(input) {
                     var payload = {};
@@ -44,21 +63,12 @@
                 var chat;
                 var i;
                 if(message.type == "chat") {
-                    if(Channel.active) {
-                        chat = $("#chat_messages");
-                        chat.append(paragraph(colorizeChat(message.username) + escapeHtml(message.text)));
-                        chat.animate({scrollTop: chat.prop("scrollHeight")}, 500);
-                    }
+                    postToChat(paragraph(colorizeChat(message.username) + escapeHtml(message.text)));
                 }
                 else if(message.type == "join" && message.username != username) {
                     i = userList.indexOf(message.username);
                     if(i < 0) {
-                        if(Channel.active) {
-                            chat = $("#chat_messages");
-                            chat.append(paragraph(colorizeName(message.username) + " has joined."));
-                            chat.animate({scrollTop: chat.prop("scrollHeight")}, 500);
-                        }
-
+                        postToChat(paragraph(colorizeName(message.username) + " has joined."));
                         userList.push(message.username);
                         refreshUserList();
                     }
@@ -66,17 +76,12 @@
                 else if(message.type == "leave" && message.username != username) {
                     i = userList.indexOf(message.username);
                     if(i >= 0) {
-                        if(Channel.active) {
-                            chat = $("#chat_messages");
-                            chat.append(paragraph(colorizeName(message.username) + " has left."));
-                            chat.animate({scrollTop: chat.prop("scrollHeight")}, 500);
-                        }
-
+                        postToChat(paragraph(colorizeName(message.username) + " has left."));
                         userList.splice(i, 1);
                         refreshUserList();
                     }
                 }
-                else if(message.type == "join" && message.username != username && !Channel.active) {
+                else if(message.type == "join" && message.username == username && !Channel.active) {
                     this.setChannel(message.channel);
                     joinChannel(channel);
                 }

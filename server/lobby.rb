@@ -53,6 +53,7 @@ class Lobby
 
     empty_channels.each do |ch|
       @channels.delete ch
+      send_delete_channel(ch)
     end
 
   end
@@ -81,14 +82,14 @@ class Lobby
 
       if in_channel?(username, channel)
 
+        send_leave(username, channel)
         @channels[channel].delete username
 
         if @channels[channel].empty?
           @channels.delete channel
           send_delete_channel(channel)
-        else
-          send_leave(username, channel)
         end
+
       end
     end
   end

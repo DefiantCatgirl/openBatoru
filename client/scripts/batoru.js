@@ -8,38 +8,42 @@ var loggedIn = false;
 var waitingForLogin = false;
 var username = "";
 
-var handler = Lobby;
+var handler;
+var mode;
 
-var mode = Mode.LOBBY;
+var ws;
 
-var ws = new WebSocket("ws://127.0.0.1:3001");
+function connect() {
+    ws = new WebSocket("ws://127.0.0.1:3001");
+    ws.onopen = function() { };
 
-ws.onopen = function() { };
+    ws.onclose = function() { alert("Connection closed...") };
 
-ws.onclose = function() { alert("Connection closed...") };
+    ws.onmessage = function(evt) {
+        var res = JSON.parse(evt.data);
 
-ws.onmessage = function(evt) {
-    var res = JSON.parse(evt.data);
+        console.log(res);
 
-    console.log(res);
-
-    if(res.type == "guest_login") {
-        waitingForLogin = false;
-        if(res.success == false)
-            alert(res.invalid ? "Invalid username" : "Username already in use");
-        else {
-            loggedIn = true;
-            document.getElementById("send_button").innerHTML = "Send";
-            $("#chat_messages").append(paragraph("You logged in as " + colorizeName(username) + "."));
+        if(res.type == "guest_login") {
+            waitingForLogin = false;
+            if(res.success == false)
+                alert(res.invalid ? "Invalid username" : "Username already in use");
+            else {
+                loggedIn = true;
+                document.getElementById("send_button").innerHTML = "Send";
+                $("#chat_messages").append(paragraph("You logged in as " + colorizeName(username) + "."));
+            }
         }
-    }
-    else {
-        if(res.channel == null)
-            Lobby.handleMessage(res);
-        else
-            Channel.handleMessage(res);
-    }
-};
+        else {
+            if(res.channel == null)
+                Lobby.handleMessage(res);
+            else
+                Channel.handleMessage(res);
+        }
+    };
+}
+
+
 
 function login() {
     var input = document.getElementById("chat_input").value;
@@ -96,25 +100,40 @@ window.onload = function() {
             onClick();
         }
     };
-};
 
+    init();
+    connect();
+};
 
 function joinChannel(channel) {
     mode = Mode.CHANNEL;
-    Channel.active = true;
-    Lobby.active = false;
+    Channel.activate();
+    Lobby.deactivate();
     handler = Channel;
 
-    // clears out the UI, removes channel list, adds card info
+    $("#chat_messages").empty();
+
+    $("#channel_title").html("Channel: <strong>" + escapeHtml(channel) + "</strong>");
+
+    $("#channel_list").hide();
+    $("#card_information").show();
 
 }
 
 function leaveChannel(channel) {
+    init();
+}
+
+function init() {
     mode = Mode.LOBBY;
-    Channel.active = false;
-    Lobby.active = true;
+    Channel.deactivate();
+    Lobby.activate();
     handler = Lobby;
 
-    // clears out the UI, removes card info, adds channel list
+    $("#chat_messages").empty();
 
+    $("#channel_title").html("<strong>Lobby</strong>");
+
+    $("#channel_list").show();
+    $("#card_information").hide();
 }

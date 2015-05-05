@@ -5,6 +5,15 @@
         var userList = [];
         var channelList = [];
 
+        function postToChat(message)
+        {
+            if(Lobby.active) {
+                var chat = $("#chat_messages");
+                chat.append(message);
+                chat.animate({scrollTop: chat.prop("scrollHeight")}, 500);
+            }
+        }
+
         function refreshUserList () {
             if(!Lobby.active)
                 return;
@@ -36,6 +45,16 @@
         return {
 
             active: true,
+
+            activate: function () {
+                Lobby.active = true;
+                refreshUserList();
+                refreshChannelList();
+            },
+
+            deactivate: function() {
+                Lobby.active = false;
+            },
 
             handleInput: function (input) {
                 var payload = {};
@@ -72,21 +91,12 @@
                 var chat;
                 var i;
                 if(message.type == "chat") {
-                    if(Lobby.active) {
-                        chat = $("#chat_messages");
-                        chat.append(paragraph(colorizeChat(message.username) + escapeHtml(message.text)));
-                        chat.animate({scrollTop: chat.prop("scrollHeight")}, 500);
-                    }
+                    postToChat(paragraph(colorizeChat(message.username) + escapeHtml(message.text)));
                 }
                 else if(message.type == "join" && message.username != username) {
                     i = userList.indexOf(message.username);
                     if(i < 0) {
-                        if(Lobby.active) {
-                            chat = $("#chat_messages");
-                            chat.append(paragraph(colorizeName(message.username) + " has joined."));
-                            chat.animate({scrollTop: chat.prop("scrollHeight")}, 500);
-                        }
-
+                        postToChat(paragraph(colorizeName(message.username) + " has joined."));
                         userList.push(message.username);
                         refreshUserList();
                     }
@@ -94,12 +104,7 @@
                 else if(message.type == "leave" && message.username != username) {
                     i = userList.indexOf(message.username);
                     if(i >= 0) {
-                        if(Lobby.active) {
-                            chat = $("#chat_messages");
-                            chat.append(paragraph(colorizeName(message.username) + " has left."));
-                            chat.animate({scrollTop: chat.prop("scrollHeight")}, 500);
-                        }
-
+                        postToChat(paragraph(colorizeName(message.username) + " has left."));
                         userList.splice(i, 1);
                         refreshUserList();
                     }
