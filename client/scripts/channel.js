@@ -44,7 +44,7 @@
                 var chat;
                 var i;
                 if(message.type == "chat") {
-                    if(this.active) {
+                    if(Channel.active) {
                         chat = $("#chat_messages");
                         chat.append(paragraph(colorizeChat(message.username) + escapeHtml(message.text)));
                         chat.animate({scrollTop: chat.prop("scrollHeight")}, 500);
@@ -53,7 +53,7 @@
                 else if(message.type == "join" && message.username != username) {
                     i = userList.indexOf(message.username);
                     if(i < 0) {
-                        if(this.active) {
+                        if(Channel.active) {
                             chat = $("#chat_messages");
                             chat.append(paragraph(colorizeName(message.username) + " has joined."));
                             chat.animate({scrollTop: chat.prop("scrollHeight")}, 500);
@@ -66,7 +66,7 @@
                 else if(message.type == "leave" && message.username != username) {
                     i = userList.indexOf(message.username);
                     if(i >= 0) {
-                        if(this.active) {
+                        if(Channel.active) {
                             chat = $("#chat_messages");
                             chat.append(paragraph(colorizeName(message.username) + " has left."));
                             chat.animate({scrollTop: chat.prop("scrollHeight")}, 500);
@@ -76,11 +76,11 @@
                         refreshUserList();
                     }
                 }
-                else if(message.type == "join" && message.username != username && !this.active) {
+                else if(message.type == "join" && message.username != username && !Channel.active) {
                     this.setChannel(message.channel);
                     joinChannel(channel);
                 }
-                else if(message.type == "leave" && message.username == username && this.active) {
+                else if(message.type == "leave" && message.username == username && Channel.active) {
                     leaveChannel(channel);
                 }
                 else if(message.type == "userlist") {
@@ -91,6 +91,10 @@
 
             setChannel: function(channelName) {
                 channel = channelName;
+            },
+
+            getChannel: function() {
+                return channel;
             }
         };
     })();

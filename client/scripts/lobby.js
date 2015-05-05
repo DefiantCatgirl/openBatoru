@@ -6,7 +6,7 @@
         var channelList = [];
 
         function refreshUserList () {
-            if(!this.active)
+            if(!Lobby.active)
                 return;
 
             userList.sort(function(a, b) { return a.toLowerCase().localeCompare(b.toLowerCase()) });
@@ -20,7 +20,7 @@
         }
 
         function refreshChannelList () {
-            if(!this.active)
+            if(!Lobby.active)
                 return;
 
             channelList.sort(function(a, b) { return a.toLowerCase().localeCompare(b.toLowerCase()) });
@@ -72,7 +72,7 @@
                 var chat;
                 var i;
                 if(message.type == "chat") {
-                    if(this.active) {
+                    if(Lobby.active) {
                         chat = $("#chat_messages");
                         chat.append(paragraph(colorizeChat(message.username) + escapeHtml(message.text)));
                         chat.animate({scrollTop: chat.prop("scrollHeight")}, 500);
@@ -81,7 +81,7 @@
                 else if(message.type == "join" && message.username != username) {
                     i = userList.indexOf(message.username);
                     if(i < 0) {
-                        if(this.active) {
+                        if(Lobby.active) {
                             chat = $("#chat_messages");
                             chat.append(paragraph(colorizeName(message.username) + " has joined."));
                             chat.animate({scrollTop: chat.prop("scrollHeight")}, 500);
@@ -94,7 +94,7 @@
                 else if(message.type == "leave" && message.username != username) {
                     i = userList.indexOf(message.username);
                     if(i >= 0) {
-                        if(this.active) {
+                        if(Lobby.active) {
                             chat = $("#chat_messages");
                             chat.append(paragraph(colorizeName(message.username) + " has left."));
                             chat.animate({scrollTop: chat.prop("scrollHeight")}, 500);

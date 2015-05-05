@@ -79,13 +79,29 @@ div {
     height: 100px;
 }
 
-#user_list {
+#channel_info {
     flex-grow: 1;
     flex-basis: 0;
     background-color: #fcfcfc;
-    overflow-y: scroll;
+
+    display: flex;
+    flex-direction: column;
+}
+
+#channel_title {
+    padding: 10px;
+    text-align: center;
+    width: 100%;
+    font-size: 16px;
+}
+
+#user_list {
+    flex-grow: 1;
+    flex-basis: 0;
 
     padding: 10px;
+
+    overflow-y: scroll;
 }
 
 #chat_block {
