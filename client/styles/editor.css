@@ -83,6 +83,8 @@
     flex-basis: 0;
 
     background-color: #fcfcfc;
+
+    overflow-y: auto;
 }
 
 .deck_invalid {
@@ -91,4 +93,38 @@
 
 .deck_valid {
     color: #00AA00;
+}
+
+.card_box {
+    display: inline-block;
+    padding: 5px;
+
+    height: 200px;
+
+    float: left;
+}
+
+.card_box_inner {
+    background-color: #fff;
+    box-shadow: 0 4px 9px 0 rgba(0, 0, 0, 0.2);
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: row;
+}
+
+.card_image {
+    height: 100%;
+}
+
+.card_text {
+    height: 100%;
+    overflow-y: auto;
+    flex-basis: 0;
+    flex-grow: 1;
+    padding: 10px;
+    word-wrap: break-word;
+
+    font-weight: bold;
 }

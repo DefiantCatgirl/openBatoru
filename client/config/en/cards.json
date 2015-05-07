@@ -1,7 +1,72 @@
 {
   "WD01-001": {
     "name": "Tamayorihime, Full Moon Miko",
-    "type": "Tama",
-
+    "description": "{Constant} As long as there is a “Romail, Helmet Armor” is on your field, all of your SIGNI get +2000 power."
+  },
+  "WD01-002": {
+    "name": "Tamayorihime, Waxing Gibbous Moon Miko"
+  },
+  "WD01-003": {
+    "name": "Tamayorihime, Half Moon Miko"
+  },
+  "WD01-004": {
+    "name": "Tamayorihime, Waxing Crescent Moon Miko"
+  },
+  "WD01-005": {
+    "name": "Tamayorihime, New Moon Miko"
+  },
+  "WD01-006": {
+    "name": "Rococo Boundary",
+    "description": "[Timing: Main Phase] Return up to two of your opponent's SIGNI to their hand"
+  },
+  "WD01-007": {
+    "name": "Avon",
+    "description": "[Timing: Main Phase] Search your deck for two white SIGNI, reveal them, and add them to your hand. Your deck is then shuffled."
+  },
+  "WD01-008": {
+    "name": "Baroque Defense",
+    "description": "[Timing: Attack Phase] Until the end of the turn, one of your opponent's LRIG OR one of your opponent's SIGNI cannot attack."
+  },
+  "WD01-009": {
+    "name": "Romail, Helmet Armor",
+    "description": "{Constant} During your opponent's turn, all your SIGNI get +1000 power.",
+    "burst": "Return one of your opponent's SIGNI to their hand."
+  },
+  "WD01-010": {
+    "name": "Caliburn, Greatsword"
+  },
+  "WD01-011": {
+    "name": "Tourette, Gauntlet",
+    "description": "{On-Play} (W) Search your deck for one \"Romail, Helmet Armor\", reveal it, and add it to your hand. Your deck is then shuffled.",
+    "burst": "Draw a card."
+  },
+  "WD01-012": {
+    "name": "Flamber, Medium Sword"
+  },
+  "WD01-013": {
+    "name": "Kukri, Small Sword"
+  },
+  "WD01-014": {
+    "name": "Bonya, Small Bow",
+    "description": "{On-Play} Look at the top three cards of your deck, then return them in any order you choose."
+  },
+  "WD01-015": {
+    "name": "Get Bible",
+    "description": "Search your deck for one SIGNI, reveal it, and add it to your hand. Your deck is then shuffled."
+  },
+  "WD01-016": {
+    "name": "Servant D",
+    "description": "[Guard]: Discard this card to negate a LRIG's attack once.\n{Constant} [Multi-Ener]: When paying a cost, this card may count as any color.",
+    "burst": "Ener Charge 1"
+  },
+  "WD01-017": {
+    "name": "Servant O",
+    "description": "[Guard]: Discard this card to negate a LRIG's attack once.\n{Constant} [Multi-Ener]: When paying a cost, this card may count as any color.",
+    "burst": "Ener Charge 1"
+  },
+  "WD01-018": {
+    "name": "Jetting Knowledge",
+    "description": "Draw a card.",
+    "burst": "Ener Charge 1"
   }
 }

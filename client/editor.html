@@ -5,7 +5,8 @@
 
     <title>openBatoru</title>
 
-    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="scripts/lib/jquery-1.11.3.min.js"></script>
+    <script src="scripts/lib/Sortable.min.js"></script>
 
     <!-- the openBatoru deck editor scripts -->
     <script src="scripts/editor/editor.js"></script>
@@ -20,8 +21,12 @@
         <div id="card_information"></div>
         <div id="control_buttons"></div>
     </div>
-    <div id="main_deck_column"></div>
-    <div id="lrig_deck_column"></div>
+    <div id="main_deck_column">
+        <!--<div class="card_box" style="width: 100%"><div class="card_box_inner"></div></div>-->
+    </div>
+    <div id="lrig_deck_column">
+        <!--<div class="card_box"><div class="card_box_inner"></div></div>-->
+    </div>
     <div id="right_column">
         <div id="right_header">
             <div id="deck_valid">
