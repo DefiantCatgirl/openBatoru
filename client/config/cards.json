@@ -1,0 +1,115 @@
+{
+  "WD01-001": {
+    "type": "lrig",
+    "color": "w",
+    "level": 4,
+    "image": "http://i.imgur.com/rpuOkFG.jpg"
+  },
+  "WD01-002": {
+    "type": "lrig",
+    "color": "w",
+    "level": 3,
+    "image": "http://i.imgur.com/QmzRa3T.jpg"
+  },
+  "WD01-003": {
+    "type": "lrig",
+    "color": "w",
+    "level": 2,
+    "image": "http://i.imgur.com/9LmpMLV.jpg"
+  },
+  "WD01-004": {
+    "type": "lrig",
+    "color": "w",
+    "level": 1,
+    "image": "http://i.imgur.com/tdJ7JuN.jpg"
+  },
+  "WD01-005": {
+    "type": "lrig",
+    "color": "w",
+    "level": 0,
+    "image": "http://i.imgur.com/VYG7zlQ.jpg"
+  },
+  "WD01-006": {
+    "type": "arts",
+    "color": "wc",
+    "image": "http://i.imgur.com/cqiKzQb.jpg"
+  },
+  "WD01-007": {
+    "type": "arts",
+    "color": "w",
+    "image": "http://i.imgur.com/iJJkvle.jpg"
+  },
+  "WD01-008": {
+    "type": "arts",
+    "color": "w",
+    "image": "http://i.imgur.com/s37WD0W.jpg"
+  },
+  "WD01-009": {
+    "type": "signi",
+    "level": 4,
+    "burst": true,
+    "color": "w",
+    "image": "http://i.imgur.com/5YhQpYF.jpg"
+  },
+  "WD01-010": {
+    "type": "signi",
+    "level": 3,
+    "burst": false,
+    "color": "w",
+    "image": "http://i.imgur.com/tptU6uB.jpg"
+  },
+  "WD01-011": {
+    "type": "signi",
+    "level": 3,
+    "burst": true,
+    "color": "w",
+    "image": "http://i.imgur.com/LJoUjoy.jpg"
+  },
+  "WD01-012": {
+    "type": "signi",
+    "level": 2,
+    "burst": false,
+    "color": "w",
+    "image": "http://i.imgur.com/PXTQfSp.jpg"
+  },
+  "WD01-013": {
+    "type": "signi",
+    "level": 1,
+    "burst": false,
+    "color": "w",
+    "image": "http://i.imgur.com/qT1e1dR.jpg"
+  },
+  "WD01-014": {
+    "type": "signi",
+    "level": 1,
+    "burst": false,
+    "color": "w",
+    "image": "http://i.imgur.com/KZmeIO5.jpg"
+  },
+  "WD01-015": {
+    "type": "spell",
+    "burst": false,
+    "color": "w",
+    "image": "http://i.imgur.com/FNtiWWj.jpg"
+  },
+  "WD01-016": {
+    "type": "signi",
+    "level": 2,
+    "burst": true,
+    "color": "c",
+    "image": "http://i.imgur.com/0WaFY0N.jpg"
+  },
+  "WD01-017": {
+    "type": "signi",
+    "level": 1,
+    "burst": true,
+    "color": "c",
+    "image": "http://i.imgur.com/nnDJ6C9.jpg"
+  },
+  "WD01-018": {
+    "type": "spell",
+    "burst": true,
+    "color": "c",
+    "image": "http://i.imgur.com/LxJ2fpo.jpg"
+  }
+}
