@@ -11,6 +11,7 @@
     <!-- the openBatoru deck editor scripts -->
     <script src="scripts/editor/editor.js"></script>
 
+        <link rel='import' href='http://www.polymer-project.org/0.8/components/paper-ripple/paper-ripple.html'>
     <link rel="stylesheet" href="styles/style.css">
     <link rel="stylesheet" href="styles/editor.css">
 </head>
@@ -19,7 +20,16 @@
 <div id="container">
     <div id="left_column">
         <div id="card_information"></div>
-        <div id="control_buttons"></div>
+        <div id="control_buttons">
+            <div class="button raised size_button" onclick="onSmaller()">
+                <paper-ripple fit></paper-ripple>
+                <div class="center_button" id="small_button">Small icons</div>
+            </div>
+            <div class="button raised size_button" onclick="onLarger()">
+                <paper-ripple fit></paper-ripple>
+                <div class="center_button" id="large_button">Large icons</div>
+            </div>
+        </div>
     </div>
     <div id="main_deck_column">
         <!--<div class="card_box" style="width: 100%"><div class="card_box_inner"></div></div>-->
