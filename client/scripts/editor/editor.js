@@ -1,10 +1,12 @@
 // Deck editor script
 
 var locale = "en";
+var defaultLocale = "en";
 
 var cards = {};
 var terms = {};
 var cardsLocale = {};
+var cardsDefaultLocale = {};
 
 var smallIcons = false;
 
@@ -13,6 +15,60 @@ var mainDeck = [];
 var lrigDeck = [];
 
 // The more logical part
+
+function cardExists(deck, id) {
+    for(var i = 0; i < deck.length; i++) {
+        if(deck[i].id == id) {
+            return true;
+        }
+    }
+    return false;
+}
+
+function getCount(deck, id) {
+    for(var i = 0; i < deck.length; i++) {
+        if(deck[i].id == id) {
+            return deck[i].count;
+        }
+    }
+
+    return 0;
+}
+
+function addExistingCard(deck, id) {
+    for(var i = 0; i < deck.length; i++) {
+        if(deck[i].id == id) {
+            if( deck[i].count < 4 &&
+                !((deck == mainDeck && totalCards(mainDeck) >= 40) || (deck == lrigDeck && totalCards(lrigDeck) >= 10))) {
+                deck[i].count++;
+            }
+            return true;
+        }
+    }
+    return false;
+}
+
+function subtractExistingCard(deck, id) {
+    for(var i = 0; i < deck.length; i++) {
+        if(deck[i].id == id) {
+            if(deck[i].count > 1) {
+                deck[i].count--;
+            }
+            return true;
+        }
+    }
+    return false;
+}
+
+function removeExistingCards(deck, id) {
+    for(var i = 0; i < deck.length; i++) {
+        if(deck[i].id == id) {
+            deck.splice(i, 1);
+            return true;
+        }
+    }
+    return false;
+}
 
 function totalCards(deck) {
     var total = 0;
@@ -23,11 +79,22 @@ function totalCards(deck) {
 }
 
 function maxCopies(deck) {
-    var copies = 0;
+    var cardCount = {};
+    var id;
+    var maxCopies = 0;
+
     for(var i = 0; i < deck.length; i++) {
-        copies = deck[i].count > copies ? deck[i].count : copies;
+        id = cardsDefaultLocale[deck[i].id];
+        cardCount[id] = cardCount[id] ? deck[i].count : cardCount[id] + deck[i].count;
     }
-    return copies;
+
+    for(var name in cardCount) {
+        if(cardCount[name] > maxCopies) {
+            maxCopies = cardCount[name];
+        }
+    }
+
+    return maxCopies;
 }
 
 // TODO: support cards with different ids but same names
@@ -75,20 +142,27 @@ function findErrors() {
 
 window.onload = function() {
 
-    $.when(
+    var requests = [
         $.getJSON('config/cards.json', function(data) {
             cards = data;
-            //console.log('got cards');
         }),
         $.getJSON('config/' + locale + '/cards.json', function(data) {
             cardsLocale = data;
-            //console.log('got locale');
+
+            if(locale == defaultLocale) {
+                cardsDefaultLocale = cardsLocale;
+            }
         }),
         $.getJSON('config/' + locale + '/terms.json', function(data) {
             terms = data;
-            //console.log('got terms');
         })
-    ).then(function(){
+    ];
+
+    requests.push($.getJSON('config/' + defaultLocale + '/cards.json', function(data) {
+        cardsDefaultLocale = data;
+    }));
+
+    $.when.apply(null, requests).then(function(){
             Sortable.create(card_list, {
                 handle: '.card_image',
                 animation: 150,
@@ -115,10 +189,28 @@ window.onload = function() {
 
                     $(itemEl).find('.card_control').removeClass('hidden');
 
-                    if(cards[itemEl.id].type != "spell" && cards[itemEl.id].type != "signi")
+                    if((cards[itemEl.id].type != "spell" &&
+                        cards[itemEl.id].type != "signi") ||
+                        getCount(mainDeck, itemEl.id) >= 4 ||
+                        totalCards(mainDeck) >= 40)
                     {
                         itemEl.remove();
+                        return;
                     }
+
+                    if(addExistingCard(mainDeck, itemEl.id)) {
+                        itemEl.remove();
+                        refreshCount(itemEl.id);
+                    } else {
+                        mainDeck.splice(evt.newIndex, 0, {"id": itemEl.id, "count": 1});
+                    }
+
+                    refreshValidity();
+                },
+                onEnd: function (evt) {
+                    var item = mainDeck[evt.oldIndex];
+                    mainDeck.splice(evt.oldIndex, 1);
+                    mainDeck.splice(evt.newIndex, 0, item);
                 }
             });
 
@@ -136,10 +228,30 @@ window.onload = function() {
 
                     $(itemEl).find('.card_control').removeClass('hidden');
 
-                    if(cards[itemEl.id].type != "lrig" && cards[itemEl.id].type != "arts" && cards[itemEl.id].type != "resona")
+                    if((cards[itemEl.id].type != "lrig" &&
+                        cards[itemEl.id].type != "arts" &&
+                        cards[itemEl.id].type != "resona") ||
+                        getCount(lrigDeck, itemEl.id) >= 4 ||
+                        totalCards(lrigDeck) >= 10)
                     {
                         itemEl.remove();
+                        return;
                     }
+
+                    if(addExistingCard(lrigDeck, itemEl.id)) {
+                        itemEl.remove();
+                        refreshCount(itemEl.id);
+                    } else {
+                        lrigDeck.splice(evt.newIndex, 0, {"id": itemEl.id, "count": 1});
+                    }
+
+                    refreshValidity();
+                },
+
+                onEnd: function (evt) {
+                    var item = lrigDeck[evt.oldIndex];
+                    lrigDeck.splice(evt.oldIndex, 1);
+                    lrigDeck.splice(evt.newIndex, 0, item);
                 }
             });
 
@@ -162,13 +274,13 @@ window.onload = function() {
                         '</div>' +
                         '<div class="card_control hidden">' +
                             '<div class="card_count">' + '1' + '</div>' +
-                            '<div class="button raised card_control_button" onclick=""> \
+                            '<div class="button raised card_control_button" onclick="onMinusClicked(\'' + id + '\')"> \
                                 <paper-ripple fit></paper-ripple><div class="center_button">-</div> \
                             </div>' +
-                            '<div class="button raised card_control_button" onclick=""> \
+                            '<div class="button raised card_control_button" onclick="onPlusClicked(\'' + id + '\')"> \
                                 <paper-ripple fit></paper-ripple><div class="center_button">+</div> \
                             </div>' +
-                            '<div class="button raised card_control_button card_delete_button" onclick=""> \
+                            '<div class="button raised card_control_button card_delete_button" onclick="onDeleteClicked(\'' + id + '\')"> \
                                 <paper-ripple fit></paper-ripple><div class="center_button">X</div> \
                             </div>' +
                         '</div>' +
@@ -204,4 +316,69 @@ function onLarger() {
     elems.addClass('card_big');
     $(".preview").height(190);
     $(".card_desc").removeClass('hidden');
+}
+
+function refreshCount(id) {
+    var mainDeckCard = $("#main_deck_column").find("#" + id).first();
+    if(mainDeckCard) {
+        mainDeckCard.find(".card_count").html(getCount(mainDeck, id));
+    }
+
+    var lrigDeckCard = $("#lrig_deck_column").find("#" + id).first();
+    if(lrigDeckCard) {
+        lrigDeckCard.find(".card_count").html(getCount(lrigDeck, id));
+    }
+}
+
+function isInMainDeck(id) {
+    return cards[id].type == "spell" || cards[id].type == "signi"
+}
+
+function onPlusClicked(id) {
+    var deck = isInMainDeck(id) ? mainDeck : lrigDeck;
+
+    addExistingCard(deck, id);
+    refreshCount(id);
+
+    refreshValidity();
+}
+
+function onMinusClicked(id) {
+    var deck = isInMainDeck(id) ? mainDeck : lrigDeck;
+
+    subtractExistingCard(deck, id);
+    refreshCount(id);
+
+    refreshValidity();
+}
+
+function onDeleteClicked(id) {
+    var isInMain = isInMainDeck(id);
+    var deck = isInMain ? mainDeck : lrigDeck;
+    var column = isInMain ? "#main_deck_column" : "#lrig_deck_column";
+
+    removeExistingCards(deck, id);
+
+    var card = $(column).find("#" + id).first();
+    if(card) {
+        card.remove();
+    }
+
+    refreshValidity();
+}
+
+function refreshValidity() {
+    error = findErrors();
+
+    var deckValidBlock = $("#deck_valid");
+
+    if(!error) {
+        deckValidBlock.html("Deck valid!");
+        deckValidBlock.removeClass("deck_invalid");
+        deckValidBlock.addClass("deck_valid");
+    } else {
+        deckValidBlock.html("Deck invalid: <br/>" + error);
+        deckValidBlock.removeClass("deck_valid");
+        deckValidBlock.addClass("deck_invalid");
+    }
 }
