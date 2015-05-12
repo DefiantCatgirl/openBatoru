@@ -21,13 +21,59 @@
     <div id="left_column">
         <div id="card_information"></div>
         <div id="control_buttons">
-            <div class="button raised size_button" onclick="onSmaller()">
-                <paper-ripple fit></paper-ripple>
-                <div class="center_button" id="small_button">Small icons</div>
+            <div id="size_box">
+                <div class="button raised size_button" onclick="onSmaller()">
+                    <paper-ripple fit></paper-ripple>
+                    <div class="center_button" id="small_button">Small icons</div>
+                </div>
+                <div class="button raised size_button" onclick="onLarger()">
+                    <paper-ripple fit></paper-ripple>
+                    <div class="center_button" id="large_button">Large icons</div>
+                </div>
             </div>
-            <div class="button raised size_button" onclick="onLarger()">
-                <paper-ripple fit></paper-ripple>
-                <div class="center_button" id="large_button">Large icons</div>
+            <div id="saveload_box">
+                <input class="saveload_select"/>
+                <div class="button raised saveload_button" onclick="">
+                    <paper-ripple fit></paper-ripple>
+                    <div class="center_button" id="small_button">Save deck</div>
+                </div>
+                <select class="saveload_select"></select>
+                <div class="button raised saveload_button" onclick="">
+                    <paper-ripple fit></paper-ripple>
+                    <div class="center_button" id="small_button">Load deck</div>
+                </div>
+                <select class="saveload_select"></select>
+                <div class="button raised saveload_button" onclick="">
+                    <paper-ripple fit></paper-ripple>
+                    <div class="center_button" id="small_button">Load preset</div>
+                </div>
+            </div>
+
+            <div id="exportimport_box">
+                <div class="button raised export_button" onclick="">
+                    <paper-ripple fit></paper-ripple>
+                    <div class="center_button" id="small_button">Export to openBatoru</div>
+                </div>
+                <div class="button raised export_button" onclick="">
+                    <paper-ripple fit></paper-ripple>
+                    <div class="center_button" id="large_button">Import from openBatoru</div>
+                </div>
+                <div class="button raised export_button" onclick="">
+                    <paper-ripple fit></paper-ripple>
+                    <div class="center_button" id="small_button">Export to Lackey</div>
+                </div>
+                <div class="button raised export_button" onclick="">
+                    <paper-ripple fit></paper-ripple>
+                    <div class="center_button" id="large_button">Import from Lackey</div>
+                </div>
+                <div class="button raised export_button" onclick="">
+                    <paper-ripple fit></paper-ripple>
+                    <div class="center_button" id="small_button">Export to WEBXOSS</div>
+                </div>
+                <div class="button raised export_button" onclick="">
+                    <paper-ripple fit></paper-ripple>
+                    <div class="center_button" id="large_button">Import from WEBXOSS</div>
+                </div>
             </div>
         </div>
     </div>
