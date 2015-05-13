@@ -7,11 +7,17 @@
 
     <script src="scripts/lib/jquery-1.11.3.min.js"></script>
     <script src="scripts/lib/Sortable.min.js"></script>
+    <script src="scripts/lib/vex.combined.min.js"></script>
+    <script>vex.defaultOptions.className = 'vex-theme-flat-attack';</script>
+    <script src="scripts/lib/dropzone.js"></script>
 
     <!-- the openBatoru deck editor scripts -->
     <script src="scripts/editor/editor.js"></script>
 
-        <link rel='import' href='http://www.polymer-project.org/0.8/components/paper-ripple/paper-ripple.html'>
+    <link rel='import' href='http://www.polymer-project.org/0.8/components/paper-ripple/paper-ripple.html'>
+    <link rel="stylesheet" href="styles/lib/vex.css">
+    <link rel="stylesheet" href="styles/lib/vex-theme-flat-attack.css">
+    <link rel="stylesheet" href="styles/lib/dropzone.css">
     <link rel="stylesheet" href="styles/style.css">
     <link rel="stylesheet" href="styles/editor.css">
 </head>
@@ -32,47 +38,52 @@
                 </div>
             </div>
             <div id="saveload_box">
-                <input class="saveload_select"/>
-                <div class="button raised saveload_button" onclick="">
+                <input class="saveload_select" id="save_input"/>
+                <div class="button raised saveload_button" id="save_button" onclick="onSaveDeck()">
                     <paper-ripple fit></paper-ripple>
-                    <div class="center_button" id="small_button">Save deck</div>
+                    <div class="center_button">Save deck</div>
                 </div>
-                <select class="saveload_select"></select>
-                <div class="button raised saveload_button" onclick="">
+                <select class="saveload_select" id="load_select"></select>
+                <div class="button raised saveload_button" id="load_button" onclick="onLoadDeck()">
                     <paper-ripple fit></paper-ripple>
-                    <div class="center_button" id="small_button">Load deck</div>
+                    <div class="center_button">Load deck</div>
                 </div>
-                <select class="saveload_select"></select>
-                <div class="button raised saveload_button" onclick="">
+                <select class="saveload_select" id="remove_select"></select>
+                <div class="button raised saveload_button" id="remove_button" onclick="onRemoveDeck()">
                     <paper-ripple fit></paper-ripple>
-                    <div class="center_button" id="small_button">Load preset</div>
+                    <div class="center_button card_delete_button">Remove deck</div>
+                </div>
+                <select class="saveload_select" id="preset_select"></select>
+                <div class="button raised saveload_button" id="preset_button" onclick="onLoadPreset()">
+                    <paper-ripple fit></paper-ripple>
+                    <div class="center_button">Load preset</div>
                 </div>
             </div>
 
             <div id="exportimport_box">
-                <div class="button raised export_button" onclick="">
+                <div class="button raised export_button" onclick="onExportOpenBatoru()">
                     <paper-ripple fit></paper-ripple>
-                    <div class="center_button" id="small_button">Export to openBatoru</div>
+                    <div class="center_button" id="exportob_button">Export to openBatoru</div>
                 </div>
-                <div class="button raised export_button" onclick="">
+                <div class="button raised export_button" onclick="onImportOpenBatoru()">
                     <paper-ripple fit></paper-ripple>
-                    <div class="center_button" id="large_button">Import from openBatoru</div>
+                    <div class="center_button" id="importob_button">Import from openBatoru</div>
                 </div>
-                <div class="button raised export_button" onclick="">
+                <div class="button raised export_button" onclick="onExportLackey()">
                     <paper-ripple fit></paper-ripple>
-                    <div class="center_button" id="small_button">Export to Lackey</div>
+                    <div class="center_button" id="exportl_button">Export to Lackey</div>
                 </div>
-                <div class="button raised export_button" onclick="">
+                <div class="button raised export_button" onclick="onImportLackey()">
                     <paper-ripple fit></paper-ripple>
-                    <div class="center_button" id="large_button">Import from Lackey</div>
+                    <div class="center_button" id="importl_button">Import from Lackey</div>
                 </div>
-                <div class="button raised export_button" onclick="">
+                <div class="button raised export_button" onclick="onExportWebxoss()">
                     <paper-ripple fit></paper-ripple>
-                    <div class="center_button" id="small_button">Export to WEBXOSS</div>
+                    <div class="center_button" id="exportw_button">Export to WEBXOSS</div>
                 </div>
-                <div class="button raised export_button" onclick="">
+                <div class="button raised export_button" onclick="onImportWebxoss()">
                     <paper-ripple fit></paper-ripple>
-                    <div class="center_button" id="large_button">Import from WEBXOSS</div>
+                    <div class="center_button" id="importw_button">Import from WEBXOSS</div>
                 </div>
             </div>
         </div>

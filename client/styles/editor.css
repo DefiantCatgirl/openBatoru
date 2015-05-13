@@ -45,11 +45,12 @@
 #card_information {
     flex-grow: 1;
     flex-basis: 0;
+    overflow-y: auto;
 }
 
 #control_buttons {
-    flex-grow: 1;
-    flex-basis: 0;
+    /*flex-grow: 1;*/
+    flex-basis: auto;
 
     padding-left: 20px;
     padding-right: 20px;
@@ -204,13 +205,15 @@
 
 .size_button {
     flex-basis: 47%;
-    height: 50px;
+    height: 30px;
     margin-bottom: 10px;
     padding: 5px;
+
+    font-size: smaller;
 }
 
 #saveload_box {
-    margin-top: 30px;
+    margin-top: 20px;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -222,6 +225,8 @@
     height: 30px;
     flex-basis: 35%;
     margin-left: 5%;
+
+    font-size: smaller;
 }
 
 .saveload_select {
@@ -230,7 +235,7 @@
 }
 
 #exportimport_box {
-    margin-top: 20px;
+    margin-top: 10px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -239,9 +244,11 @@
 
 .export_button {
     flex-basis: 47%;
-    height: 50px;
+    height: 40px;
     margin-bottom: 10px;
     padding: 5px;
+
+    font-size: smaller;
 }
 
 /*.export_button:nth-child(2n+2) {*/

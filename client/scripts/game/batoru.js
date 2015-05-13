@@ -49,8 +49,9 @@ function login() {
     var input = document.getElementById("chat_input").value;
     var res = (new RegExp("\\S")).test(input);
 
-    if(!res)
+    if(!res) {
         return;
+    }
 
     while(input.slice(-1) == "\n") {
         input = input.slice(0, input.length - 1);
