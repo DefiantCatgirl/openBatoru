@@ -2,9 +2,10 @@ require 'rubygems'
 # require 'em/pure_ruby' if Gem.win_platform?
 require 'eventmachine'
 require 'websocket-eventmachine-server'
-require File.join(File.dirname(__FILE__), './connections/socket')
-require File.join(File.dirname(__FILE__), './connections/websocket')
-require File.join(File.dirname(__FILE__), './lobby')
+
+require_relative './connections/socket'
+require_relative './connections/websocket'
+require_relative './core/lobby'
 
 @ws_conns = {}
 @lobby = Lobby.new
