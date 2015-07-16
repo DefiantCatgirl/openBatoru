@@ -45,6 +45,8 @@
 
 #control_buttons {
     flex-grow: 1;
+
+    text-align: center;
 }
 
 /* right column */
@@ -99,6 +101,9 @@
     flex-basis: 0;
 
     padding: 10px;
+
+    word-break: break-all;
+    overflow-x: hidden;
 }
 
 #chat_inputbox {

@@ -132,6 +132,7 @@ function init() {
     handler = Lobby;
 
     $("#chat_messages").empty();
+    $("#control_buttons").empty();
 
     $("#channel_title").html("<strong>Lobby</strong>");
 

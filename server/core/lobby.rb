@@ -26,8 +26,9 @@ class Lobby
       # debug
       puts username + ' logged in'
 
-      @lobby_channel.send_userlist(username)
       @lobby_channel.broadcast_join(username)
+      @lobby_channel.users[username] = connection
+      send_userlist(username, nil)
 
       return true
     end
@@ -43,10 +44,10 @@ class Lobby
 
     empty_channels = []
 
-    @channels.each do |channel|
+    @channels.each do |name, channel|
       channel.handle_logout(username)
       if channel.users.empty?
-        empty_channels.push ch
+        empty_channels.push name
       end
     end
 
@@ -87,6 +88,10 @@ class Lobby
         end
       end
     end
+
+    if channel.nil?
+      @lobby_channel.handle_message(username, message)
+    end
   end
 
   def broadcast_create_channel(channel)
@@ -107,7 +112,7 @@ class Lobby
     if channel.nil?
       payload = {}
       payload[:type] = 'userlist'
-      payload[:users] = @guests.keys
+      payload[:users] = @users.keys
       payload[:channels] = @channels.keys
       private_message(username, payload)
     else

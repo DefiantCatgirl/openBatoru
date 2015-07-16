@@ -3,6 +3,10 @@
     var Channel = (function() {
 
         var channel;
+        var seat1;
+        var seat2;
+
+        var inGame = false;
 
         var userList = [];
 
@@ -26,6 +30,23 @@
             }
         }
 
+        function refreshSeats() {
+            var seatsBlock = $("#control_buttons");
+            seatsBlock.empty();
+
+            if(seat1 == null)
+                seatsBlock.append("[ 1 - vacant ]");
+            else
+                seatsBlock.append(colorizeName(seat1))
+
+            seatsBlock.append(" VS ");
+
+            if(seat2 == null)
+                seatsBlock.append("[ 2 - vacant ]");
+            else
+                seatsBlock.append(colorizeName(seat2))
+        }
+
         return {
 
             active: false,
@@ -33,6 +54,7 @@
             activate: function () {
                 Channel.active = true;
                 refreshUserList();
+                refreshSeats();
             },
 
             deactivate: function() {
@@ -46,6 +68,17 @@
                         var arguments = input.split(" ");
                         if(arguments[0] === "/leave") {
                             payload.type = "leave";
+                            payload.channel = channel;
+                        } else if (arguments[0] === "/take" && arguments[1].length > 0) {
+                            if(seat1 == username || seat2 == username)
+                                return;
+                            payload.type = "take_seat";
+                            payload.seat = parseInt(arguments[1]);
+                            payload.channel = channel;
+                        } else if (arguments[0] === "/free") {
+                            if(seat1 != username && seat2 != username)
+                                return;
+                            payload.type = "free_seat";
                             payload.channel = channel;
                         }
                         else return;
@@ -90,7 +123,32 @@
                 }
                 else if(message.type == "userlist") {
                     userList = message.users;
+                    seat1 = message.seats[0];
+                    seat2 = message.seats[1];
                     refreshUserList();
+                    refreshSeats();
+                }
+                else if(message.type == "take_seat") {
+                    if(message.seat == 1)
+                        seat1 = message.username;
+                    else if(message.seat == 2)
+                        seat2 = message.username;
+
+                    if(username == message.username)
+                        inGame = true;
+
+                    refreshSeats();
+                }
+                else if(message.type == "free_seat") {
+                    if(message.seat == 1)
+                        seat1 = null;
+                    else if(message.seat == 2)
+                        seat2 = null;
+
+                    if(username == message.username)
+                        inGame = false;
+
+                    refreshSeats();
                 }
             },
 
